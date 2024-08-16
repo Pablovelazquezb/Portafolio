@@ -1,0 +1,504 @@
+﻿@page
+@model awaq_frontend.Pages.FormModel
+@{
+}
+
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-2">
+            <div class="containerMenu">
+                <img src="~/images/AWAQLogoNegro.png" alt="Logo de Awaq" class="logo">
+                <br>
+                <div><a href="/Dashboard" class="menu-item"><i class="fas fa-tachometer-alt"></i> Tablero individual</a></div>
+                @if (HttpContext.Session.GetString("UserRole") != "Miembro")
+                {
+                    <div><a href="/DashboardAdmin" class="menu-item"><i class="fas fa-tachometer-alt"></i> Tablero grupal</a></div>
+                    <div><a href="/Users" class="menu-item"><i class="fas fa-users"></i> Usuarios</a></div>
+                }
+                <div><a href="/UserManual" class="menu-item"><i class="fas fa-book"></i> Manual de usuario</a></div>
+                <div><a href="/GameInstructions" class="menu-item"><i class="fas fa-gamepad"></i> Instrucciones</a></div>
+                <div><a href="/Themes" class="menu-item"><i class="fas fa-palette"></i> Temas</a></div>
+                <div><a href="/Form" class="menu-item active"><i class="fas fa-file-alt"></i> Formulario</a></div>
+                <div><a href="/Profile" class="menu-item"><i class="fas fa-user"></i> Perfil</a></div>
+
+            </div>
+        </div>
+        <div class="col-10 specialBackground">
+            <div class="d-flex justify-content-between align-items-center container1">
+                <h5 class="align-name colorGris">@HttpContext.Session.GetString("UserEmail")</h5>
+            </div>
+            <div class="container6">
+                <h3 class="text-center pb-5 mt-5">Formulario de retroalimentación</h3>
+                <div class="form-container d-flex justify-content-center">
+                    <form asp-action="SubmitFeedback" method="post" class="w-75 p-4 bg-light rounded shadow">
+                        <div class="form-group mb-3">
+                            <label for="Suggestions" class="form-label">Sugerencias para mejorar el juego:</label>
+                            <input type="text" asp-for="Input.Suggestions" id="Suggestions" name="Suggestions" class="form-control" required />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="Remove" class="form-label">Petición para eliminar algún aspecto del juego:</label>
+                            <input type="text" asp-for="Input.Remove" id="Remove" name="Remove" class="form-control" required />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="Questions" class="form-label">Preguntas:</label>
+                            <input type="text" asp-for="Input.Questions" id="Questions" name="Questions" class="form-control" required />
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-block m-auto d-block col-2 greenButton">Enviar</button>
+                        </div>
+
+                    </form>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Status))
+                {
+                    <div class="text-center mt-4 mb-3 m-auto d-block col-3 alert @Model.ButtonStatus" role="alert">
+                        @Model.Status
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arima', sans-serif;
+    }
+
+    .form-control {
+        height: 38px; /* Adjust this height to match your design */
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.428571429;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    }
+
+        .form-control[type="date"] {
+            -webkit-appearance: none; /* For Safari */
+            -moz-appearance: none; /* For Firefox */
+            appearance: none;
+            position: relative;
+            z-index: 1;
+            padding-left: 10px;
+            color: #555 !important;
+        }
+
+            .form-control[type="date"]::-webkit-inner-spin-button,
+            .form-control[type="date"]::-webkit-clear-button {
+                display: none; /* Remove spin buttons */
+            }
+
+            .form-control[type="date"]::-webkit-calendar-picker-indicator {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                z-index: 2;
+                cursor: pointer;
+                transform: translateY(-50%);
+            }
+
+    select {
+        color: black !important;
+    }
+
+    .specialBackground {
+        background-color: #f8f9fa;
+    }
+
+    .positionAbsolute {
+        position: absolute;
+    }
+
+    /* Generales */
+    .colorAwaq {
+        color: #0d6803
+    }
+
+    .small {
+        font-size: 10px !important;
+        width: 30px;
+        padding: 5px !important;
+    }
+
+    .alignLeft {
+        text-align: left;
+    }
+
+    .colorGris {
+        color: #8a8989;
+    }
+
+    select {
+        color: black !important;
+    }
+
+    /* Menu */
+    .containerMenu {
+        text-align: center;
+        width: 100%;
+    }
+
+    .logo {
+        width: 80%;
+        height: auto;
+        display: block;
+        margin: 10px;
+        margin-left: 20px;
+    }
+
+    .menu-item2 {
+        padding: 10px;
+        padding-left: 40px;
+        padding-right: 90px;
+        text-align: center;
+        font-weight: bold; /* Negrita que aparece en hover */
+    }
+
+    .menu-item:hover {
+        color: #0d6803; /* Color de texto que aparece en hover */
+        text-decoration: none;
+        background-color: #cccccc; /* Un tono más claro o más oscuro al actual */
+    }
+
+    .specialBackground {
+        background-color: #f8f9fa;
+    }
+
+
+    .greenButton {
+        background-color: #0d6803;
+        color: white;
+    }
+
+        .greenButton:hover {
+            color: white;
+        }
+
+    .menu-item {
+        display: flex;
+        margin: 10px 0;
+        text-decoration: none;
+        font-size: 16px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        /* Reduced padding-right for single-line text */
+        padding-right: 30px;
+        border-radius: 5px;
+        font-weight: bold; /* Negrita que aparece en hover */
+        /* Optional: Consider white-space: nowrap; only if needed */
+        white-space: nowrap; /* Use with caution */
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        color: #0d6803; /* Color de texto que aparece en hover */
+        text-decoration: none;
+        font-size: 16px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 300px;
+        border-radius: 5px;
+        background-color: #e6e6e6; /* Fondo que aparece en hover */
+        font-weight: bold; /* Negrita que aparece en hover */
+    }
+
+        .menu-item:hover {
+            color: #0d6803; /* Color de texto que aparece en hover */
+            text-decoration: none;
+            background-color: #cccccc; /* Un tono más claro o más oscuro al actual */
+        }
+
+        .menu-item.active:hover {
+            background-color: #568d4f; /* Un tono más claro o más oscuro al actual */
+            color: #ffffff; /* Cambio de color de texto para más contraste */
+        }
+
+        .menu-item i {
+            margin-right: 8px;
+            width: 20px;
+        }
+
+        .menu-item.active {
+            background-color: #0d6803; /* Cambia el fondo para la opción activa */
+            color: #ffffff; /* Cambia el color del texto para mejorar el contraste */
+            font-weight: bold; /* Mantiene el texto en negrita */
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 300px;
+            border-radius: 5px; /* Mantiene los bordes redondeados */
+        }
+
+
+    .align-name {
+        width: auto; /* Permite que el ancho se ajuste al contenido */
+        margin-right: 65px; /* Añade espacio a la derecha para mover el texto hacia la izquierda */
+    }
+
+
+    .container6 {
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding-left: 20px;
+        padding-right: 10px;
+        padding-top: 20px;
+        padding-bottom: 5px;
+        min-height: 80vh;
+    }
+
+
+    .profilePic {
+        object-fit: cover;
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+    }
+
+    .container3 {
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    .information {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .row {
+        margin-bottom: 10px;
+    }
+
+    /* Última row */
+    .container4 {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap; /* Asegura que los elementos no se envuelvan */
+        gap: 10px; /* Espacio entre los contenedores */
+        margin-bottom: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .security-section,
+    .social-media-section {
+        flex: 1; /* Cada sección toma la mitad del espacio disponible */
+        background-color: #ffffff;
+        border-radius: 4px;
+        padding: 20px;
+        box-sizing: border-box;
+        width: 45%;
+        box-sizing: border-box;
+    }
+
+    /* Seguridad */
+    .security-section {
+        width: auto;
+    }
+
+    .change-password {
+        background-color: #ffffff;
+        border: 1px solid #d0d0d0;
+        border-radius: 4px;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #000;
+    }
+
+    .password-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .password-info b {
+        margin-right: 10px;
+    }
+
+    /* Redes Sociales */
+    .social-media-section {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .social-media-icons {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .social-column {
+        flex: 1; /* Distribuye el espacio igualmente */
+        display: flex;
+        justify-content: center; /* Centra horizontalmente el contenido en la columna */
+    }
+
+    .social-icon {
+        display: inline-block;
+        width: 80px;
+        height: auto;
+        line-height: 50px;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+        .social-icon:hover {
+            transform: scale(1.1); /* Aumenta el tamaño del icono en un 10% */
+        }
+
+    .social-media-icons {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 10px;
+    }
+
+
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arima', sans-serif;
+    }
+
+    /* Generales */
+    .colorAwaq {
+        color: #46763E;
+    }
+
+    .alignLeft {
+        text-align: left;
+    }
+
+    .colorGris {
+        color: #8a8989;
+    }
+
+
+
+    /* CONTENIDO */
+    .container1 {
+        width: 100%;
+        margin-bottom: 20px;
+        margin-top: 30px;
+        justify-content: space-between;
+    }
+
+    .align-name {
+        width: auto;
+        margin-right: 65px;
+    }
+
+    .container2, .container3, .container4 {
+        width: 95%;
+        margin-bottom: 10px;
+        background-color: #ffffff;
+        border-radius: 16px;
+    }
+
+    .container2 {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 250px;
+        width: 95%;
+        margin-bottom: 10px;
+        background-color: #ffffff;
+        border-radius: 16px;
+    }
+
+
+    .container-profile {
+        width: 95%;
+        margin-right: 100px;
+        margin-bottom: 10px;
+        background-color: #eaeaea;
+        border-radius: 16px;
+        position: relative;
+    }
+
+
+    .profilePic {
+        object-fit: cover;
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+        margin-left: 25px;
+    }
+
+    .plantPic {
+        object-fit: cover;
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+    }
+
+    .full-size-right {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: right;
+        border-radius: 10px;
+    }
+
+    .image-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .information {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+
+
+    .container4 {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        gap: 10px;
+        margin-bottom: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .image-section {
+        flex: 1;
+        background-color: #eaeaea;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top-right-radius: 16px;
+        border-bottom-right-radius: 16px;
+        border-bottom-right-radius: 16px;
+        z-index: 1;
+    }
+
+    .profile-section {
+        z-index: 2;
+    }
+
+    .container2 div {
+        margin-left: 50px;
+    }
+</style>

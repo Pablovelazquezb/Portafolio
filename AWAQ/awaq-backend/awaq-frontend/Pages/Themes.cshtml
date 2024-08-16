@@ -1,0 +1,519 @@
+﻿@page
+@model awaq_frontend.Pages.ThemesModel
+@{
+}
+<div class="container">
+    <div class="row">
+        <div class="col-2">
+            <div class="containerMenu">
+                <img src="~/images/AWAQLogoNegro.png" alt="Logo de Awaq" class="logo">
+                <br>
+                <div><a href="/Dashboard" class="menu-item"><i class="fas fa-tachometer-alt"></i> Tablero individual</a></div>
+                @if (HttpContext.Session.GetString("UserRole") != "Miembro")
+                {
+                    <div><a href="/DashboardAdmin" class="menu-item"><i class="fas fa-tachometer-alt"></i> Tablero grupal</a></div>
+                    <div><a href="/Users" class="menu-item"><i class="fas fa-users"></i> Usuarios</a></div>
+                }
+                <div><a href="/UserManual" class="menu-item"><i class="fas fa-book"></i> Manual de usuario</a></div>
+                <div><a href="/GameInstructions" class="menu-item"><i class="fas fa-gamepad"></i> Instrucciones</a></div>
+                <div><a href="/Themes" class="menu-item active"><i class="fas fa-palette"></i> Temas</a></div>
+                <div><a href="/Form" class="menu-item"><i class="fas fa-file-alt"></i> Formulario</a></div>
+                <div><a href="/Profile" class="menu-item"><i class="fas fa-user"></i> Perfil</a></div>
+
+            </div>
+        </div>
+        <div class="col-10 specialBackground">
+            <div class="d-flex justify-content-between align-items-center container1">
+                <h5 class="align-name colorGris">@HttpContext.Session.GetString("UserEmail")</h5>
+            </div>
+
+            <div class="container6">
+                <h3 class="mt-4">Guía de temas</h3>
+                <input type="text" id="myInput" onkeyup="search()" placeholder="Buscador" title="Ingresa contenido">
+                <div id="myUL" class="row">
+                    <ul id="id01" class="sort-list">
+                        <li class="TEDI show">
+                            <div class="content" data-default="TEDI" data-title="TEDI" data-date="11-02-2020">
+                                <img src="https://www.mistercomparador.com/noticias/wp-content/uploads/2015/01/Puzzle-1.jpg" alt="TEDI" style="width:100%">
+                                <div class="flex">
+                                    <h4>TEDI</h4>
+                                </div>
+                                <h7>1. HTML</h7>
+                                <p>- Presentar desafíos que requieran la identificación y manipulación de elementos HTML dentro del juego.</p>
+                                <p>- Proporcionar ejemplos interactivos que muestren cómo se estructura y se utiliza HTML para crear contenido web.</p>
+                                <h7>2. CSS</h7>
+                                <p>- Desafía al usuario a aplicar estilos CSS a elementos específicos dentro del juego para cambiar su apariencia.</p>
+                                <p>- Proporciona ejercicios prácticos que muestren cómo se utilizan selectores CSS para dirigirse a elementos específicos en una página web.</p>
+                                <h7>3. TypeScript</h7>
+                                <p>- Introduce conceptos básicos de tipado estático y clases en TypeScript a través de desafíos que requieran la manipulación de datos dentro del juego.</p>
+                                <p>- Proporciona ejemplos que ilustren la diferencia entre JavaScript y TypeScript en términos de tipado y estructura de código.</p>
+                                <h7>4. React</h7>
+                                <p>- Presenta desafíos que requieran la creación y manipulación de componentes React dentro del juego.</p>
+                                <p>- Proporciona ejemplos interactivos que muestren cómo se utilizan props y state en React para gestionar la información y el estado de la aplicación.</p>
+                                <h7>5. Tailwind CSS</h7>
+                                <p>- Desafía al usuario a aplicar estilos utilizando clases de Tailwind CSS en lugar de CSS tradicional.</p>
+                                <p>- Proporciona ejemplos prácticos que muestren cómo se pueden utilizar las clases de Tailwind CSS para aplicar estilos de manera rápida y eficiente.</p>
+                                <h7>6. GitHub</h7>
+                                <p>- Simula situaciones de colaboración y gestión de proyectos utilizando GitHub dentro del juego.</p>
+                                <p>- Proporciona desafíos que requieran la creación y gestión de repositorios, ramas y pull requests para integrar cambios en el código del juego.</p>
+                                <h7>7. Scrum</h7>
+                                <p>- Introduce conceptos básicos de Scrum y metodologías ágiles a través de desafíos que requieran la planificación y ejecución de tareas dentro del juego.</p>
+                                <p>- Proporciona ejemplos que muestren cómo se pueden utilizar las prácticas de Scrum, como las reuniones diarias y las retrospectivas, para mejorar el proceso de desarrollo del juego.</p>
+                            </div>
+                        </li>
+                        <li class="Comunicación show">
+                            <div class="content" data-default="Comunicación" data-title="Comunicación" data-date="12-04-2020">
+                                <img src="https://www.sesamehr.co/wp-content/uploads/2022/02/estrategias-para-mejorar-la-comunicacion-organizacional-de-una-empresa.jpg" alt="Comunicación" style="width:100%">
+                                <div class="flex">
+                                    <h4>Comunicación</h4>
+                                </div>
+                                <h7>Objetivos</h7>
+                                <p>Awaq es una estructura projectizada, no jerarquizada. Lo que significa que nuestras Comunicaciones son constantes y eficientes.</p>
+                                <p>Recuerda que las Comunicaciones siempre deben ser respetuosas y apropiadas al momento de la conversación. Evita comentarios innecesarios o malintencionados. Colaboramos en un ambiente multicultural que no conoce fronteras ni nacionalidades. Todo lo que comunicas representa Awaq ONGD y sus valores.</p>
+                                <h7>Apps de Correo</h7>
+                                <p>Correo electrónico: Outlook</p>
+                                <p>En esta aplicación recibes todos los correos tanto internos como externos. Si necesitas registrarte en una compañía externa a Awaq para obtener información necesaria para la colaboración, deberás hacerlo usando el correo org que se te facilitó.</p>
+                                <p>No está permitido usar el correo org en registros web que fomenten actividades no relacionadas con las actividades de Awaq, pudiendo constituir un delito el registro en webs que incurran en un daño moral, material o financiero a la organización.</p>
+                                <p>Outlook contiene la agenda que debes mantener organizada y siempre actualizada.</p>
+                                <p>IMPORTANTE: Outlook combina correo y agenda todo en uno. Es muy recomendable que te descargues la app en el móvil ya que te notifica de la llegada de nuevos correos.</p>
+                                <h7>Apps de Mensajería Instantánea</h7>
+                                <p>Mensajería Instantánea: Rainbow</p>
+                                <p>En esta aplicación mantienes todos tus contactos enganchados en conversaciones para poder colaborar en los distintos proyectos a los que te puedas incorporar, es nuestra oficina virtual.</p>
+                                <p>Es muy aconsejable tenerla en el móvil para poder recibir las notificaciones de aquellos proyectos en los que te veas implicado.</p>
+                                <p>Mensajería Instantánea: Sharepoint</p>
+                                <p>Sharepoint sirve como método de almacenamiento y repositorio. Es muy aconsejable tenerla en el móvil para poder recibir las notificaciones de aquellos proyectos en los que te veas implicado.</p>
+                            </div>
+                        </li>
+                        <li class="Seguridad show">
+                            <div class="content" data-default="Seguridad" data-title="Seguridad" data-date="13-02-2020">
+                                <img src="https://www.hubspot.com/hs-fs/hubfs/media/queesseguridadinformatica.jpeg?width=1785&height=1200&name=queesseguridadinformatica.jpeg" alt="Seguridad" style="width:100%">
+                                <div class="flex">
+                                    <h4>Seguridad</h4>
+                                </div>
+                                <h7>1. Confidencialidad</h7>
+                                <p>Garantizar que la información sensible se mantenga privada y solo esté accesible para aquellos autorizados a verla.</p>
+                                <h7>2. Ciberataques</h7>
+                                <p>Estos se inician desde una computadora en contra de un sitio web, sistema informático o computadora individual que compromete la confidencialidad, integridad o disponibilidad del ordenador o de la información almacenada en el mismo.</p>
+                                <h7>3. Uso seguro de dispositivos móviles</h7>
+                                <p>Proteger los dispositivos móviles con contraseñas, cifrado y aplicaciones de seguridad, además de tener cuidado al descargar aplicaciones y compartir información.</p>
+                                <h7>4. Contraseña</h7>
+                                <p>Su contraseña debe:</p>
+                                    <p>- Tener al menos 12 caracteres de longitud, cuando sea compatible con la tecnología.</p>
+                                    <p>- Contener una mezcla de caracteres alfabéticos y no alfabéticos o una mezcla de al menos dos tipos de caracteres no alfabéticos.</p>
+                                    <p>- No tener ID del usuario como parte de la contraseña.</p>
+                                    <p>- Nunca contener patrones restringidos como qwerty, asdf, 1234, etc.</p>
+                                    <p>- Nunca ser un palíndromo.</p>
+                            </div>
+                        </li>
+                        <li class="Código de Ética show">
+                            <div class="content" data-default="Código de Ética" data-title="Código de Ética" data-date="14-02-2020">
+                                <img src="https://linkiafp.es/wp-content/uploads/2023/05/deontologico-scaled.jpg.webp" alt="Código de Ética" style="width:100%">
+                                <div class="flex">
+                                    <h4>Código de Ética</h4>
+                                </div>
+                                <h7>Respeto</h7>
+                                <p>Tratar a todas las personas dignamente, sin discriminación por sexo, raza, nacionalidad o religión, considerando siempre sus derechos laborales. Y colaborando e impulsando políticas inclusivas.</p>
+                                <h7>Integridad</h7>
+                                <p>Actuar con imparcialidad, justicia y buena fe. Orientar el trabajo hacia la lucha contra la pobreza y hacia la sostenibilidad, evitando cualquier beneficio personal de los recursos públicos.</p>
+                                <h7>Responsabilidad</h7>
+                                <p>Respetar la legislación, actuar honesta y ejemplarmente, teniendo en cuenta las consecuencias en terceros. Reconocer los errores, solucionándolos y evitando su repetición.</p>
+                                <h7>Profesionalidad</h7>
+                                <p>Dedicación, entrega y compromiso con la Calidad y la mejora continua. Mejorar conocimientos y capacidades participando en acciones de formación permanente buscando siempre la excelencia profesional.</p>
+                                <h7>Compromiso</h7>
+                                <p>Mantener la lealtad y compromiso con la Organización así como los proyectos y programas a los que nos comprometemos.</p>
+                                <h7>Participación y Diálogo</h7>
+                                <p>Trabajar en equipo, compartir conocimientos, fomentar la participación y la comunicación efectiva. Reconocer el derecho a opinar de todos los afectados, huyendo de cualquier muestra de superioridad.</p>
+                                <h7>Transparencia</h7>
+                                <p>Acreditar de forma veraz y completa los resultados y los criterios seguidos, respondiendo diligentemente a las demandas de información.</p>
+                                <h7>Pautas Básicas</h7>
+                                <p>Actuar siempre en beneficio de la ONGD evitando intereses personales y cualquier discriminación.</p>
+                                <h7>Pautas Respecto con los colaboradores</h7>
+                                <p>Actuar siempre con Compromiso, corresponsabilidad, igualdad e imparcialidad, colaborando con transparencia y buena fe.</p>
+                                <h7>Pautas Respecto al Resto de Compañeros</h7>
+                                <p>Respeto a las diferentes culturas, diálogo y trabajo en equipo.</p>
+                                <h7>Respecto a la ONG</h7>
+                                <p>Eficacia, honradez, profesionalidad y responsabilidad, respeto a su nombre como embajadores de la organización.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="not-found" style="display:none">No encontrado</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>function filterSelection(c) {
+        var x, i;
+        x = document.getElementsByTagName("li");
+        if (c == "all") c = "";
+        for (i = 0; i < x.length; i++) {
+            RemoveClass(x[i], "show");
+            if (x[i].className.indexOf(c) > -1) AddClass(x[i], "show");
+        }
+    }
+
+    function AddClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            if (arr1.indexOf(arr2[i]) == -1) {
+                element.className += " " + arr2[i];
+            }
+        }
+    }
+
+    function RemoveClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            while (arr1.indexOf(arr2[i]) > -1) {
+                arr1.splice(arr1.indexOf(arr2[i]), 1);
+            }
+        }
+        element.className = arr1.join(" ");
+    }
+
+    var btnContainer = document.getElementById("myBtnContainer");
+    var btns = btnContainer.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+        });
+    }
+
+    function search() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByClassName("content")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+
+    function chat_order() {
+        var container = $("#id01");
+        var items = $("li");
+
+        items.each(function () {
+            var BCDate = $(this).attr("data-date");
+            var standartDate = new Date(BCDate).getTime();
+            $(this).attr("data-date", standartDate);
+        });
+
+        items.sort(function (a, b) {
+            a = parseFloat($(a).attr("data-date"));
+            b = parseFloat($(b).attr("data-date"));
+            return a > b ? -1 : a < b ? 1 : 0;
+        }).each(function () {
+            container.prepend(this);
+        });
+
+        var btnContainer = document.getElementById("myBtnContainer1");
+        var btns = btnContainer.getElementsByClassName("btn");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var current = document.getElementsByClassName("active");
+                current[0].className = current[0].className.replace(" active", "");
+                this.className += " active";
+            });
+        }
+    }
+
+    function reloadPage() {
+        location.reload(true);
+    }
+
+    function sortList() {
+        var list, i, switching, b, shouldSwitch;
+        list = document.getElementById("id01");
+        switching = true;
+        while (switching) {
+            switching = true;
+            b = list.getElementsByTagName("li");
+            for (i = 0; i < (b.length - 1); i++) {
+                shouldSwitch = true;
+                if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                b[i].parentNode.insertBefore(b[i + 1], b[i]);
+                switching = true;
+            }
+        }
+    }</script>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arima', sans-serif;
+    }
+
+    select {
+        color: black !important;
+    }
+
+    .table th {
+        font-size: 0.8rem;
+    }
+
+    .specialBackground {
+        background-color: #f8f9fa;
+    }
+
+    #myDonutChart1, #myDonutChart2, #myDonutChart3, #myDonutChart4 {
+        width: 170px !important;
+        height: 170px !important;
+        margin: auto;
+        display: block;
+    }
+
+    .positionAbsolute {
+        position: absolute;
+    }
+
+    .colorAwaq {
+        color: #0d6803
+    }
+
+    .small {
+        font-size: 10px !important;
+        width: 30px;
+        padding: 5px !important;
+    }
+
+    .alignLeft {
+        text-align: left;
+    }
+
+    .colorGris {
+        color: #8a8989;
+    }
+
+    .containerMenu {
+        text-align: center;
+        width: 100%;
+    }
+
+    .logo {
+        width: 80%;
+        height: auto;
+        display: block;
+        margin: 10px;
+        margin-left: 20px;
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        color: #0d6803; /* Color de texto que aparece en hover */
+        text-decoration: none;
+        font-size: 16px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 500px;
+        border-radius: 5px;
+        background-color: #e6e6e6;
+        font-weight: bold; /* Negrita que aparece en hover */
+        white-space: nowrap;
+    }
+
+        .menu-item:hover {
+            color: #0d6803; /* Color de texto que aparece en hover */
+            text-decoration: none;
+            background-color: #cccccc; /* Un tono más claro o más oscuro al actual */
+        }
+
+        .menu-item.active:hover {
+            background-color: #568d4f; /* Un tono más claro o más oscuro al actual */
+            color: #ffffff; /* Cambio de color de texto para más contraste */
+        }
+
+        .menu-item i {
+            margin-right: 8px;
+            width: 20px;
+        }
+
+        .menu-item.active {
+            background-color: #0d6803; /* Cambia el fondo para la opción activa */
+            color: #ffffff; /* Cambia el color del texto para mejorar el contraste */
+            font-weight: bold; /* Mantiene el texto en negrita */
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 300px;
+            border-radius: 5px; /* Mantiene los bordes redondeados */
+        }
+
+    .container1 {
+        width: 100%;
+        margin-bottom: 20px;
+        margin-top: 30px;
+        justify-content: space-between;
+    }
+
+    .align-name {
+        width: auto;
+        margin-right: 65px;
+    }
+
+    .section {
+        background-color: #ffffff;
+        padding: 15px;
+    }
+
+    .main {
+        max-width: 1024px;
+        margin: auto;
+    }
+
+    .row {
+        margin: 10px -16px;
+    }
+
+        .row ul {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+            margin: 0;
+        }
+
+        .row, .row > ul > li {
+            padding: 8px;
+        }
+
+    li {
+        float: left;
+        width: 50%;
+        display: none;
+    }
+
+    .content {
+        background-color: white;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+        .content p {
+            font-size: 15px;
+            line-height: 19px;
+        }
+
+        .content h6 {
+            font-size: 15px;
+            line-height: 19px;
+            padding: 0;
+            margin: 0;
+        }
+
+    .show {
+        display: block;
+    }
+
+    .btn {
+        border: none;
+        outline: none;
+        padding: 12px 16px;
+        background-color: white;
+        cursor: pointer;
+        float: left;
+    }
+
+        .btn:hover {
+            background-color: #0d6803;
+        }
+
+        .btn.active {
+            background-color: #0d6803;
+            color: white;
+        }
+
+    .flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .flex h4 {
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            line-height: 40px;
+        }
+
+    h7 {
+        text-align: left;
+        margin: 0;
+        padding: 0;
+        line-height: 40px;
+        font-weight: bold;
+    }
+
+    .flex h6 {
+        text-align: right;
+        margin: 0;
+        padding: 0;
+        line-height: 15px;
+        color: #078fc3;
+    }
+
+    #myInput {
+        background-image: url('https://murugananthamc.files.wordpress.com/2020/04/searchicon.png');
+        background-position: 10px 12px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+
+    #myUL {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        #myUL li a {
+            border: 1px solid #ddd;
+            margin-top: -1px;
+            background-color: #f6f6f6;
+            padding: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            color: black;
+            display: block
+        }
+
+            #myUL li a:hover:not(.header) {
+                background-color: #eee;
+            }
+    .container6 {
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding-left: 20px;
+        padding-right: 10px;
+        padding-top: 20px;
+        padding-bottom: 5px;
+        min-height: 80vh;
+    }
+</style>

@@ -1,0 +1,530 @@
+﻿@page
+@model awaq_frontend.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Tablero Individual";
+}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-2">
+            <div class="containerMenu">
+                <img src="~/images/AWAQLogoNegro.png" alt="" class="logo">
+                <br>
+                <div><a class="menu-item active"><i class="fas fa-tachometer-alt "></i> Tablero individual</a></div>
+                @if (HttpContext.Session.GetString("UserRole") != "Miembro")
+                {
+                    <div><a href="/DashboardAdmin" class="menu-item"><i class="fas fa-tachometer-alt "></i> Tablero grupal</a></div>
+                    <div><a href="/Users" class="menu-item menu-button"><i class="fas fa-users"></i> Usuarios</a></div>
+                }
+                <div><a href="/UserManual" class="menu-item menu-button"><i class="fas fa-book"></i> Manual de usuario</a></div>
+                <div><a href="/GameInstructions" class="menu-item"><i class="fas fa-gamepad"></i> Instrucciones</a></div>
+
+                <div><a href="/Themes" class="menu-item"><i class="fas fa-palette"></i> Temas</a></div>
+                <div><a href="/Form" class="menu-item"><i class="fas fa-file-alt"></i> Formulario</a></div>
+
+
+                <div><a href="/Profile" class="menu-item"><i class="fas fa-user"></i> Perfil</a></div>
+            </div>
+        </div>
+        <div class="col-10 extraPadding specialBackground">
+            <div class="d-flex justify-cosntent-between align-items-center container1">
+                <h5 class="align-name colorGris">@HttpContext.Session.GetString("UserEmail")</h5>
+            </div>
+            <div class="container2 d-flex position-relative section">
+                <div class="row w-100">
+                    <div class="col-3 pt-2">
+                        <h4 class="text-center pb-2">
+                            Código de ética
+                        </h4>
+                        <canvas id="myDonutChart1"></canvas>
+                        <h5 class="mt-3 text-center bold">@Model.userProgress.PautasDeConducta %</h5>
+                    </div>
+                    <div class="col-3 pt-2">
+                        <h4 class="text-center pb-2">
+                            Comunicación
+                        </h4>
+                        <canvas id="myDonutChart2"></canvas>
+                        <h5 class="mt-3 text-center bold">@Model.userProgress.Comunicaciones %</h5>
+                    </div>
+
+                    <div class="col-3 pt-2">
+                        <h4 class="text-center pb-2">
+                            Seguridad
+                        </h4>
+                        <canvas id="myDonutChart3"></canvas>
+                        <h5 class="mt-3 text-center bold">@Model.userProgress.Ciberseguridad %</h5>
+                    </div>
+
+                    <div class="col-3 pt-2">
+                        <h4 class="text-center pb-2">
+                            TEDI
+                        </h4>
+                        <canvas id="myDonutChart4"></canvas>
+                        <h5 class="mt-3 text-center bold">@Model.userProgress.TEDI %</h5>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="container3 d-flex position-relative section-banner">
+                <img src="/images/AwaqBanner-export.png" class="banner-image" />
+            </div>
+
+            <div class="container4 d-flex">
+                <div class="col-6 section-3 faq-section">
+                    <h4>Preguntas frecuentes</h4>
+                    <div class="faq-item">
+                        <h5 class="faq-question">¿Cuánto porcentaje es necesario para completar la capacitación?</h5>
+                        <p class="faq-answer">Se necesita 80% en cada área para pasar la capacitación.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h5 class="faq-question">¿Con qué cuenta ingreso al videojuego?</h5>
+                        <p class="faq-answer">Con la misma que ingresas a esta página web.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h5 class="faq-question">¿Cuánto dura la capacitación?</h5>
+                        <p class="faq-answer">La capacitación tiene una duración de 3 meses.</p>
+                    </div>
+                </div>
+                <div class="col-6 section-3">
+                    <h4>Top 5</h4>
+                    <div class="row">
+                        @if (@Model.rankingUsers != null && @Model.rankingUsers.Any())
+                        {
+                            <table class="table table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Código de Ética</th>
+                                        <th>Comunicación</th>
+                                        <th>Seguridad</th>
+                                        <th>TEDI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < @Model.rankingUsers.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>@Model.rankingUsers[i]?.Name</td>
+                                            <td>@Model.rankingUsers[i]?.PautasDeConducta%</td>
+                                            <td>@Model.rankingUsers[i]?.Comunicaciones%</td>
+                                            <td>@Model.rankingUsers[i]?.Ciberseguridad%</td>
+                                            <td>@Model.rankingUsers[i]?.TEDI%</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var ctx = document.getElementById('myDonutChart1').getContext('2d');
+    var data = {
+        labels: ['Porcentaje acumulado', 'Porcentaje faltante'],
+        datasets: [{
+            data: [@Model.userProgress.PautasDeConducta, 100 - @Model.userProgress.PautasDeConducta ],
+            backgroundColor: ['#0d6803', '#cccccc']
+        }]
+    };
+
+    var chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            borderWidth: 0,
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                datalabels: {
+                    display: function (context) {
+                        return context.dataset.data[context.dataIndex] > 0;
+                    },
+                    color: 'white',
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    }
+                }
+            }
+        }
+    });
+
+
+    var ctx2 = document.getElementById('myDonutChart2').getContext('2d');
+    var data2 = {
+        labels: ['Porcentaje acumulado', 'Porcentaje faltante'],
+        datasets: [{
+            data: [@Model.userProgress.Comunicaciones, 100 - @Model.userProgress.Comunicaciones ],
+            backgroundColor: ['#0d6803', '#cccccc']
+        }]
+    };
+
+    var chart2 = new Chart(ctx2, {
+        type: 'doughnut',
+        data: data2,
+        options: {
+            borderWidth: 0,
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                datalabels: {
+                    display: function (context) {
+                        return context.dataset.data[context.dataIndex] > 0;
+                    },
+                    color: 'white',
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    }
+                }
+            }
+        }
+    });
+
+    var ctx3 = document.getElementById('myDonutChart3').getContext('2d');
+    var data3 = {
+        labels: ['Porcentaje acumulado', 'Porcentaje faltante'],
+        datasets: [{
+            data: [@Model.userProgress.Ciberseguridad, 100 - @Model.userProgress.Ciberseguridad ],
+            backgroundColor: ['#0d6803', '#cccccc']
+        }]
+    };
+
+    var chart3 = new Chart(ctx3, {
+        type: 'doughnut',
+        data: data3,
+        options: {
+            borderWidth: 0,
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                datalabels: {
+                    display: function (context) {
+                        return context.dataset.data[context.dataIndex] > 0;
+                    },
+                    color: 'white',
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    }
+                }
+            }
+        }
+    });
+
+    var ctx4 = document.getElementById('myDonutChart4').getContext('2d');
+    var data4 = {
+        labels: ['Porcentaje acumulado', 'Porcentaje faltante'],
+        datasets: [{
+            data: [@Model.userProgress.TEDI, 100 - @Model.userProgress.TEDI ],
+            backgroundColor: ['#0d6803', '#cccccc']
+        }]
+    };
+
+    var chart4 = new Chart(ctx4, {
+        type: 'doughnut',
+        data: data4,
+        options: {
+            borderWidth: 0,
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                datalabels: {
+                    display: function (context) {
+                        return context.dataset.data[context.dataIndex] > 0;
+                    },
+                    color: 'white',
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    }
+                }
+            }
+        }
+    });
+
+</script>
+
+
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arima', sans-serif;
+    }
+
+    .specialBackground {
+        background-color: #f8f9fa;
+
+    }
+
+    select {
+        color: black !important;
+    }
+
+    .table th {
+        font-size: 0.8rem;
+    }
+
+    #myDonutChart1, #myDonutChart2, #myDonutChart3, #myDonutChart4 {
+        width: 170px !important;
+        height: 170px !important;
+        margin: auto;
+        display: block;
+    }
+
+    .positionAbsolute {
+        position: absolute;
+    }
+
+    /* Generales */
+    .colorAwaq {
+        color: #0d6803
+    }
+
+    .small {
+        font-size: 10px !important;
+        width: 30px;
+        padding: 5px !important;
+    }
+
+    .alignLeft {
+        text-align: left;
+    }
+
+    .colorGris {
+        color: #8a8989;
+    }
+
+    select {
+        color: black !important;
+    }
+
+    /* Menu */
+    .containerMenu {
+        text-align: center;
+        width: 100%;
+    }
+
+    .logo {
+        width: 80%;
+        height: auto;
+        display: block;
+        margin: 10px;
+        margin-left: 20px;
+    }
+
+    .menu-item2 {
+        padding: 10px;
+        padding-left: 40px;
+        padding-right: 90px;
+        text-align: center;
+        font-weight: bold; /* Negrita que aparece en hover */
+    }
+
+    .menu-item:hover {
+        color: #0d6803; /* Color de texto que aparece en hover */
+        text-decoration: none;
+        background-color: #cccccc; /* Un tono más claro o más oscuro al actual */
+    }
+
+    .menu-item {
+        display: flex;
+        margin: 10px 0;
+        text-decoration: none;
+        font-size: 16px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        /* Reduced padding-right for single-line text */
+        padding-right: 30px;
+        border-radius: 5px;
+        font-weight: bold; /* Negrita que aparece en hover */
+        /* Optional: Consider white-space: nowrap; only if needed */
+        white-space: nowrap; /* Use with caution */
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        color: #0d6803; /* Color de texto que aparece en hover */
+        text-decoration: none;
+        font-size: 16px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 300px;
+        border-radius: 5px;
+        background-color: #e6e6e6; /* Fondo que aparece en hover */
+        font-weight: bold; /* Negrita que aparece en hover */
+    }
+
+        .menu-item:hover {
+            color: #0d6803; /* Color de texto que aparece en hover */
+            text-decoration: none;
+            background-color: #cccccc; /* Un tono más claro o más oscuro al actual */
+        }
+
+        .menu-item.active:hover {
+            background-color: #568d4f; /* Un tono más claro o más oscuro al actual */
+            color: #ffffff; /* Cambio de color de texto para más contraste */
+        }
+
+        .menu-item i {
+            margin-right: 8px;
+            width: 20px;
+        }
+
+        .menu-item.active {
+            background-color: #0d6803; /* Cambia el fondo para la opción activa */
+            color: #ffffff; /* Cambia el color del texto para mejorar el contraste */
+            font-weight: bold; /* Mantiene el texto en negrita */
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 300px;
+            border-radius: 5px; /* Mantiene los bordes redondeados */
+        }
+
+    /* CONTENIDO */
+    /* COLUMNA 1 */
+    .container1 {
+        width: 100%;
+        margin-bottom: 20px;
+        margin-top: 30px;
+        justify-content: space-between;
+    }
+
+    .align-name {
+        width: auto;
+        margin-right: 65px;
+    }
+
+    .container2 {
+        width: 100%;
+        margin-right: 100px;
+        margin-bottom: 10px;
+        gap: 10px;
+        border-radius: 16px;
+        position: relative;
+        height: 300px;
+    }
+
+    .container3 {
+        width: 100%;
+        margin-right: 100px;
+        margin-bottom: 10px;
+        gap: 10px;
+        border-radius: 16px;
+        position: relative;
+        height: 300px;
+        background-color: #F8F9FA;
+    }
+
+    .container4 {
+        width: 100%;
+        gap: 10px;
+        margin-bottom: 10px;
+        border-radius: 16px;
+        position: relative;
+        height: 300px;
+    }
+
+    .section {
+        background-color: #ffffff;
+        padding: 15px;
+    }
+
+    .section-R1 {
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 15px;
+        height: 250px;
+    }
+
+    .chart-placeholder {
+        background-color: #e6e6e6;
+        border-radius: 8px;
+        height: 100%;
+        align-items: center;
+    }
+
+    .ranking-chart {
+        height: calc(100% - 32px); /* Ajustar la altura para evitar sobresalir */
+    }
+
+    .section-col {
+        background-color: #e6e6e6;
+        border-radius: 8px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .section-3 {
+        background-color: #ffffff;
+        padding: 15px;
+        gap: 10px;
+        border-radius: 16px;
+        height: 100%; /* Asegura que no sobresalga del contenedor */
+    }
+
+    /* Preguntas Frecuentes */
+    .faq-section {
+        max-height: 100%;
+        overflow-y: auto;
+        border: 1px solid #e6e6e6;
+        border-radius: 16px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .faq-item {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .faq-question {
+        color: #46763E;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .faq-answer {
+        color: #6c757d;
+        margin-left: 15px;
+    }
+
+    /* Banner */
+    .banner-image {
+        max-width: 100%;
+        max-height: 100%;
+        margin: auto;
+        display: block;
+    }
+
+    .section-banner {
+        background-color: #d6f5ff;
+        padding: 15px;
+    }
+</style>

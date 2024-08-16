@@ -1,0 +1,417 @@
+﻿@page
+@model awaq_frontend.Pages.UsersModel
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-2">
+            <div class="containerMenu">
+                <img src="~/images/AWAQLogoNegro.png" alt="" class="logo">
+                <br>
+                <div><a href="/Dashboard" class="menu-item"><i class="fas fa-tachometer-alt "></i> Tablero individual</a></div>
+                @if (HttpContext.Session.GetString("UserRole") != "Miembro")
+                {
+                    <div><a href="/DashboardAdmin" class="menu-item"><i class="fas fa-tachometer-alt "></i> Tablero grupal</a></div>
+                    <div><a class="menu-item active menu-button"><i class="fas fa-users"></i> Usuarios</a></div>
+                }
+                <div><a href="/UserManual" class="menu-item menu-button"><i class="fas fa-book"></i> Manual de usuario</a></div>
+                <div><a href="/GameInstructions" class="menu-item"><i class="fas fa-gamepad"></i> Instrucciones</a></div>
+
+                <div><a href="/Themes" class="menu-item"><i class="fas fa-palette"></i> Temas</a></div>
+                <div><a href="/Form" class="menu-item"><i class="fas fa-file-alt"></i> Formulario</a></div>
+
+
+                <div><a href="/Profile" class="menu-item"><i class="fas fa-user"></i> Perfil</a></div>
+
+            </div>
+        </div>
+        <div class="col-10 extraPadding specialBackground">
+            <div class="d-flex justify-cosntent-between align-items-center container1">
+                <h5 class="align-name colorGris">@HttpContext.Session.GetString("UserEmail")</h5>
+            </div>
+            <div class="container6">
+                <div class="row">
+                    <div class="col-3 pt-3 pl-5">
+                        <h3 class="mt-3">Agregar usuario</h3>
+                        <form class="row" method="post" asp-page-handler="CreateUser">
+                            <label class="mt-3"><b>Nombre</b></label>
+                            <input value="@Model.PrevName" required asp-for="Input.name" class="form-control w-90" placeholder="Ingresa el nombre" />
+
+                            <label class="mt-3"><b>Rol</b></label>
+                            <select value="@Model.PrevRole" asp-for="Input.role" class="form-select">
+                                <option value="3">Miembro</option>
+                                @if (HttpContext.Session.GetString("UserRole") == "Super Administrador")
+                                {
+                                    <option value="2">Administrador</option>
+                                }
+                            </select>
+
+                            <label class="mt-3"><b>Correo electrónico</b></label>
+                            <input value="@Model.PrevEmail" required asp-for="Input.email" type="email" class="form-control" placeholder="Ingresa el correo electrónico" />
+
+                            <label class="mt-3"><b>Contraseña</b></label>
+                            <input value="@Model.PrevPassword" required asp-for="Input.password" type="password" class="form-control mb-4" placeholder="Ingresa la contraseña" />
+                            <button type="submit" class="btn btn-success d-block m-auto col-6">Agregar</button>
+                            @if (!string.IsNullOrEmpty(Model.Error))
+                            {
+                                <div class="alert alert-danger mt-4 " role="alert">
+                                    @Model.Error
+                                </div>
+                            }
+                        </form>
+                    </div>
+
+
+                    <div class="col-9">
+                        <table class="table table-responsive table-bordered table-users">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Rol</th>
+                                    <th>Correo electrónico</th>
+                                    <th>Fecha de registro</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Users != null)
+                                {
+                                    @foreach (var item in Model.Users)
+                                    {
+                                        @if (item.Role != "Super Administrador")
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                                <td class="d-flex flex-row">
+                                                    <div class="col-9">
+                                                        @item.Role
+                                                    </div>
+
+                                                    @if (HttpContext.Session.GetString("UserRole") == "Super Administrador")
+                                                    {
+                                                        <form class="col" asp-page-handler="Role" method="post">
+                                                            <input type="hidden" name="UserId" value="@item.ID" />
+                                                            <input type="hidden" name="UserRole" value="@item.Role" />
+                                                            <button type="submit" class="btn small @(item.Role == "Miembro" ? "btn-success" : "btn-dark")">
+                                                                @if (item.Role == "Miembro")
+                                                                {
+                                                                    <i class="fa fa-arrow-up fa-sm"></i>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <i class="fa fa-arrow-down fa-sm"></i>
+                                                                }
+                                                            </button>
+                                                        </form>
+
+                                                    }
+                                                </td>
+                                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.JoinedAt)</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arima', sans-serif;
+    }
+
+    select {
+        color: black !important;
+    }
+
+    .positionAbsolute{
+        position: absolute;
+    }
+
+    .specialBackground {
+        background-color: #f8f9fa;
+    }
+
+    /* Generales */
+    .colorAwaq {
+        color: #0d6803
+    }
+
+    .small {
+        font-size: 10px !important;
+        width: 30px;
+        padding: 5px !important;
+    }
+
+    .alignLeft {
+        text-align: left;
+    }
+
+
+
+    .colorGris {
+        color: #8a8989;
+    }
+
+    select{
+        color: black !important;
+    }
+
+    /* Menu */
+    .containerMenu {
+        text-align: center;
+        width: 100%;
+    }
+
+    .logo {
+        width: 80%;
+        height: auto;
+        display: block;
+        margin: 10px;
+        margin-left: 20px;
+    }
+
+    .menu-item2 {
+        padding: 10px;
+        padding-left: 40px;
+        padding-right: 90px;
+        text-align: center;
+        font-weight: bold; /* Negrita que aparece en hover */
+    }
+
+    .menu-item:hover {
+            color: #0d6803; /* Color de texto que aparece en hover */
+            text-decoration: none;
+            background-color: #cccccc; /* Un tono más claro o más oscuro al actual */
+        }
+
+    .menu-item {
+        display: flex;
+        margin: 10px 0;
+        text-decoration: none;
+        font-size: 16px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        /* Reduced padding-right for single-line text */
+        padding-right: 30px;
+        border-radius: 5px;
+        font-weight: bold; /* Negrita que aparece en hover */
+        /* Optional: Consider white-space: nowrap; only if needed */
+        white-space: nowrap; /* Use with caution */
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        color: #0d6803; /* Color de texto que aparece en hover */
+        text-decoration: none;
+        font-size: 16px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 300px;
+        border-radius: 5px;
+        background-color: #e6e6e6; /* Fondo que aparece en hover */
+        font-weight: bold; /* Negrita que aparece en hover */
+    }
+
+        .menu-item:hover {
+            color: #0d6803; /* Color de texto que aparece en hover */
+            text-decoration: none;
+            background-color: #cccccc; /* Un tono más claro o más oscuro al actual */
+        }
+
+        .menu-item.active:hover {
+            background-color: #568d4f; /* Un tono más claro o más oscuro al actual */
+            color: #ffffff; /* Cambio de color de texto para más contraste */
+        }
+
+        .menu-item i {
+            margin-right: 8px;
+            width: 20px;
+        }
+
+        .menu-item.active {
+            background-color: #0d6803; /* Cambia el fondo para la opción activa */
+            color: #ffffff; /* Cambia el color del texto para mejorar el contraste */
+            font-weight: bold; /* Mantiene el texto en negrita */
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 300px;
+            border-radius: 5px; /* Mantiene los bordes redondeados */
+        }
+
+    /* CONTENIDO */
+    /* COLUMNA 1 */
+    .container1 {
+        width: 100%;
+        margin-bottom: 20px;
+        margin-top: 30px;
+        justify-content: space-between;
+    }
+
+    .align-name {
+        width: auto; /* Permite que el ancho se ajuste al contenido */
+        margin-right: 65px; /* Añade espacio a la derecha para mover el texto hacia la izquierda */
+    }
+
+    .container2, .container3, .container4 {
+        width: 95%;
+        margin-bottom: 10px;
+        background-color: #ffffff;
+        border-radius: 16px;
+    }
+
+    .container2 {
+        display: flex; /* Activa flexbox dentro del contenedor */
+        align-items: center;
+        justify-content: space-between;
+        height: 250px;
+        width: 95%;
+        margin-right: 100px;
+        margin-bottom: 10px;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 20px;
+    }
+
+    .container6 {
+        width: 100%;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding-left: 20px;
+        padding-right: 10px;
+        padding-top: 20px;
+        padding-bottom: 5px;
+    }
+
+    .container3 {
+        height: 250px;
+        padding: 30px;
+    }
+
+    .profilePic {
+        object-fit: cover;
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+    }
+
+    .container3 {
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    .information {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .row {
+        margin-bottom: 10px;
+    }
+
+    /* Última row */
+    .container4 {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap; /* Asegura que los elementos no se envuelvan */
+        gap: 10px; /* Espacio entre los contenedores */
+        margin-bottom: 20px;
+        background-color: #f8f9fa;
+    }
+
+    .security-section,
+    .social-media-section {
+        flex: 1; /* Cada sección toma la mitad del espacio disponible */
+        background-color: #ffffff;
+        border-radius: 4px;
+        padding: 20px;
+        box-sizing: border-box;
+        width: 45%;
+        box-sizing: border-box;
+    }
+
+    /* Seguridad */
+    .security-section {
+        width: auto;
+    }
+
+    .change-password {
+        background-color: #ffffff;
+        border: 1px solid #d0d0d0;
+        border-radius: 4px;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #000;
+    }
+
+    .password-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .password-info b {
+        margin-right: 10px;
+    }
+
+    /* Redes Sociales */
+    .social-media-section {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .social-media-icons {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .social-column {
+        flex: 1; /* Distribuye el espacio igualmente */
+        display: flex;
+        justify-content: center; /* Centra horizontalmente el contenido en la columna */
+    }
+
+    .social-icon {
+        display: inline-block;
+        width: 80px;
+        height: auto;
+        line-height: 50px;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+        .social-icon:hover {
+            transform: scale(1.1); /* Aumenta el tamaño del icono en un 10% */
+        }
+
+    .social-media-icons {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 10px;
+    }
+</style>
