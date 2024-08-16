@@ -1,0 +1,5 @@
+Nombre: Mauricio
+Direccion: Direccion
+Correo: correo
+Numeroo de tarjeta: 1111111122222222
+Fecha de vencimiento: 12/26
