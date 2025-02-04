@@ -1,0 +1,26 @@
+﻿@page
+@model Ecochef.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form method="post">
+    <div>
+        <label for="Email">Email:</label>
+        <input type="email" id="Email" name="Email" asp-for="Email" required />
+    </div>
+
+    <div>
+        <label for="Password">Password:</label>
+        <input type="password" id="Password" name="Password" asp-for="Password" required />
+    </div>
+
+    <button type="submit">Login</button>
+</form>
+
+@if (Model.LoginFailed)
+{
+    <p style="color:red">Invalid login attempt. Please check your email and password.</p>
+}

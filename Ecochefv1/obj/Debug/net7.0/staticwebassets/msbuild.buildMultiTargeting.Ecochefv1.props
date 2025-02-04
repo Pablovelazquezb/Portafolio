@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/Ecochefv1.props" />
+</Project>

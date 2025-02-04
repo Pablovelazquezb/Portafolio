@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.11
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecochefv1", "Ecochefv1\Ecochefv1.csproj", "{991C8F4E-636A-46BA-8CA2-4AD5C83B07B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{991C8F4E-636A-46BA-8CA2-4AD5C83B07B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991C8F4E-636A-46BA-8CA2-4AD5C83B07B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991C8F4E-636A-46BA-8CA2-4AD5C83B07B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991C8F4E-636A-46BA-8CA2-4AD5C83B07B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72250E10-6122-4AE1-8686-941F761E01AD}
+	EndGlobalSection
+EndGlobal
