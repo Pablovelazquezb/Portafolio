@@ -22,7 +22,3 @@ BanorteApp is a mobile banking application built for iOS using Swift and UIKit. 
 - `SignupViewController.swift` - Handles new user registration.
 - `TransferViewController.swift` - Manages money transfers between accounts.
 
-## ⚙️ Setup
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/BanorteApp.git
